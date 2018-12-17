@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MAIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="CSS/main.css" />
+    
+
+
+
+    <script src="https://fb.me/react-15.1.0.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://npmcdn.com/react-router@2.4.0/umd/ReactRouter.min.js"></script>
+</head>
+<body>
+    
+    <div id="main"></div>
+
+
+    <script type="text/babel">
+var { Router,
+      Route,
+      IndexRoute,
+      IndexLink,
+      Link } = ReactRouter;
+
+var Home = React.createClass({
+  render: function() {
+      return (
+        <div>
+          <h2>HOME</h2>
+          <p>Information about White Room</p>
+  
+          <p>Here you can checked yourself !</p>
+        </div>
+      );
+    }
+});
+
+var Tests = React.createClass({
+  render: function() {
+      return (
+        <div>
+          <h2>Tests</h2>
+          <ol>
+            <li><a href="quiz.html">My New Test</a></li>
+            
+          </ol>
+        </div>
+      );
+    }
+});
+
+var Contact = React.createClass({
+  render: function() {
+      return (
+        <div>
+          <h2>GOT QUESTIONS?</h2>
+          <p>No contact info :)
+          </p>
+        </div>
+      );
+    }
+});
+ 
+var App = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>White Room</h1>
+        <ul className="header">
+          <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
+          <li><Link to="/Tests" activeClassName="active">Tests</Link></li>
+          <li><Link to="/contact" activeClassName="active">Contact</Link></li>
+        </ul>
+        <div className="content">
+        {this.props.children}
+        </div>
+      </div>
+    )
+  }
+});
+
+ReactDOM.render(
+    <Router>
+    <Route path="/" component={App}>
+      <IndexRoute component={Home}/>
+      <Route path="Tests" component={Tests} />
+      <Route path="contact" component={Contact} />
+    </Route>
+    </Router>, 
+  document.getElementById('main')
+);
+
+        </script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

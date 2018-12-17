@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QUIZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+
+    
+
+    <script src="https://fb.me/react-15.1.0.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://npmcdn.com/react-router@2.4.0/umd/ReactRouter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    
+</head>
+<body>
+
+<div id="app"></div>
+
+
+
+
+        <script type="text/babel">
+        
+        
+        class App extends React.Component {
+  constructor() {
+    super();
+   // this.quizDataSrc = 'https://api.myjson.com/bins/x61f2';
+    
+
+    this.quizDataSrc = 'https://api.myjson.com/bins/18zjcw';
+
+    				
+    this.state = {
+      inPlay: false,
+      resultsNeeded: false,
+      title: '',
+      score: 0,
+      subtitle: '',
+      timeTaken: null,
+      quesIndexCurrent: 0,
+      quesIndexTotal: 0,
+      quizData: [],
+      userAnswers: []
+    }
+    this.beginPlay = this.beginPlay.bind(this);
+    this.incrementScore = this.incrementScore.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.prevQuestion = this.prevQuestion.bind(this);
+    this.resetQuiz = this.resetQuiz.bind(this); 
+    this.updateScore = this.updateScore.bind(this);
+    this.updateUserAnswers = this.updateUserAnswers.bind(this);
+    this.getResultsTable = this.getResultsTable.bind(this);
+    this.removeResultsTable = this.removeResultsTable.bind(this);
+    this.setTimeTaken = this.setTimeTaken.bind(this);
+  }
+  
+  
+  setTimeTaken(time) {
+    console.log(time);
+    this.setState({timeTaken: time});
+  }
+  
+  //change to ... set
+  getResultsTable() {
+    this.setState({resultsNeeded: true});
+  }
+  
+  // change to ... set
+  removeResultsTable() {
+    this.setState({resultsNeeded: false});
+  }
+  
+  // change to ... set
+  beginPlay() {
+    this.setState({inPlay: true});
+  }
+  
+  componentDidMount() {
+    this.getQuizData();
+  }
+  
+  
+  incrementScore() {
+    this.setState({score: this.state.score + 1});
+  }
+  
+  nextQuestion() {
+    const {quesIndexCurrent, userAnswers} = this.state;
+    if (userAnswers[quesIndexCurrent]) {
+      const clickSound = document.getElementById('click');
+      clickSound.volume = 0.1;
+      clickSound.play();
+      this.setState({quesIndexCurrent: quesIndexCurrent + 1});
+    } 
+  }
+  
+  prevQuestion() {
+    this.setState({quesIndexCurrent: this.state.quesIndexCurrent - 1});
+  }
+  
+  resetQuiz() {
+    this.setState({
+      inPlay: false,
+      score: 0,
+      quesIndexCurrent: 0,
+      userAnswers: [],
+      resultsNeeded: false,
+      timeTaken: null
+    });
+  }
+  
+  updateScore() {
+    const {
+      quizData, 
+      quesIndexCurrent, 
+      userAnswers} = this.state;
+    const correctAnswer = quizData[1][quesIndexCurrent].correct;
+    if (userAnswers[quesIndexCurrent] == correctAnswer) {
+      this.incrementScore();
+    }
+  }
+  
+  updateUserAnswers(e) {
+    const answerId = e.target.id;
+    const userAnswersCp = this.state.userAnswers.slice();    
+    userAnswersCp[this.state.quesIndexCurrent] = answerId;
+    this.setState({userAnswers: userAnswersCp}, () => {
+      this.updateScore();
+      this.nextQuestion();
+    });
+  }
+  
+  getQuizData() {
+    axios.get(this.quizDataSrc).then((res) => {
+      this.setState({quizData: res.data}, () => {
+        this.setState({title: this.state.quizData[0].title});
+        this.setState({quesIndexTotal: this.state.quizData[1].length});
+        console.log(this.state.quizData);
+      })
+    }).catch((error) => {
+      console.error(error);
+    }).then(() => {
+      console.log('Finished request');
+    });
+  }
+  
+  render() {
+    const {
+      inPlay,
+      nextQuestion,
+      quesIndexCurrent, 
+      quesIndexTotal, 
+      quizData,
+      resultsNeeded,
+      score,
+      subtitle,
+      timeTaken,
+      title,
+      userAnswers} = this.state;
+    const displayFooter = () => {
+      if (!inPlay) {
+        return (
+          <div className="guidelines footer" id="neon">WHITE ROOM</div>
+        )
+      }
+    };
+    return (
+      <div className="guidelines container">
+        <section className="section-hud"></section>
+        <Audio />
+        <Main beginPlay={this.beginPlay}
+              inPlay={inPlay} 
+              nextQuestion={this.nextQuestion}
+              prevQuestion={this.prevQuestion}
+              getResultsTable={this.getResultsTable}
+              removeResultsTable={this.removeResultsTable}
+              quesIndexCurrent={quesIndexCurrent}
+              quesIndexTotal={quesIndexTotal}
+              quizData={quizData}
+              resultsNeeded={resultsNeeded}
+              resetQuiz={this.resetQuiz}
+              score={score}
+              setTimeTaken={this.setTimeTaken}
+              subtitle={subtitle} 
+              timeTaken={timeTaken}
+              title={title}
+              updateUserAnswers={this.updateUserAnswers}
+              userAnswers={userAnswers} />
+        <section className="section-footer">
+          {displayFooter()}
+        </section>
+      </div>
+    )
+  }
+}
+
+class Main extends React.Component {
+  render() {
+    const {
+      beginPlay, 
+      getResultsTable,
+      inPlay,
+      nextQuestion,
+      prevQuestion,
+      quizData, 
+      quesIndexCurrent,
+      quesIndexTotal, 
+      resetQuiz,
+      removeResultsTable,
+      resultsNeeded,
+      score,
+      setTimeTaken,
+      subtitle,
+      timeTaken,
+      title,
+      updateUserAnswers, 
+      userAnswers} = this.props;
+    const getScreen = () => {
+      if (resultsNeeded) {
+        return (
+          <ResultsTable quizData={quizData}
+      timeTaken={timeTaken}
+      userAnswers={userAnswers}
+                        removeResultsTable={removeResultsTable}/>
+        )
+      }
+      if (inPlay && (quesIndexCurrent + 1 <= quesIndexTotal)) {
+        return (
+          <QuestionScreen nextQuestion={nextQuestion}
+                          prevQuestion={prevQuestion}
+                          quesIndexCurrent={quesIndexCurrent}
+                          quesIndexTotal={quesIndexTotal} 
+                          quizData={quizData}
+                          setTimeTaken={setTimeTaken}
+                          userAnswers={userAnswers}
+                          updateUserAnswers={updateUserAnswers}/>)
+      } else if (inPlay && ((quesIndexCurrent + 1) >= quesIndexTotal)) {
+        return (
+          <ResultsScreen getResultsTable={getResultsTable}
+                         nextQuestion={nextQuestion}
+                         prevQuestion={prevQuestion}
+                         quesIndexCurrent={quesIndexCurrent}
+                         quesIndexTotal={quesIndexTotal} 
+                         quizData={quizData}
+                         resetQuiz={resetQuiz}
+                         score={score}
+                         userAnswers={userAnswers}
+                         updateUserAnswers={updateUserAnswers}/>)
+      } else if (!inPlay) {
+        return (
+          <TitleScreen beginPlay={beginPlay} 
+                       quizData={quizData} 
+                       subtitle={subtitle}
+                       title={title} />);
+      }
+    };               
+    return (getScreen());
+  }
+}
+
+class TitleScreen extends React.Component {
+  render() {
+    const {beginPlay, quizData, subtitle, title} = this.props;
+    const getTitleScreen = () => {
+      if (quizData.length) {
+        return (<div className="guidelines titlescreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
+          <h1 id="fire-text">{title}</h1>
+          <p>{subtitle}</p><br/>
+          <button className="btn btn-nav "  onClick={beginPlay}>
+            Пройти тест <i className="fas fa-arrow-right"></i>
+          </button>
+        </div>)
+      } else {
+        return (
+          <div className="guidelines titlescreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
+          <div className="loader">
+            <div className="lds-ellipsis">
+            <div></div><div></div><div></div><div></div></div>
+          </div>
+          <p>Сохраняйте спокойствие</p> 
+		<p>Идет загрузка ..... </p><br/>
+        </div>
+        )
+      }
+    }
+    return (
+      <section className="section-main">
+        <div className="guidelines timer">&nbsp;</div>  
+        {getTitleScreen()}
+      </section>
+    )
+  }
+}
+
+class Debug extends React.Component {
+  render() {
+    const {userAnswers} = this.props;
+    return (
+      <div className="debug-window">
+        <div>{userAnswers}</div>
+      </div>
+    )
+  }
+}
+
+class QuestionScreen extends React.Component {
+  render() {
+    const {
+      nextQuestion,
+      prevQuestion,
+      quizData, 
+      quesIndexCurrent, 
+      quesIndexTotal,
+      setTimeTaken,
+      updateUserAnswers, 
+      userAnswers} = this.props;
+    return (
+      <section className="section-main">
+        <Debug userAnswers={userAnswers}/>
+        <Timer setTimeTaken={setTimeTaken}/>
+        <Question quesIndexCurrent={quesIndexCurrent} 
+                  question={quizData}/>
+        <ProgressBar quesIndexCurrent={quesIndexCurrent}                                      quesIndexTotal={quesIndexTotal}/>
+        <Answers answers={quizData} 
+                 updateUserAnswers={updateUserAnswers}
+                 userAnswers={userAnswers}
+                 quesIndexCurrent={quesIndexCurrent}/>     
+        <NavButtons nextQuestion={nextQuestion}
+                    prevQuestion={prevQuestion}
+                    quesIndexCurrent={quesIndexCurrent} 
+                    quesIndexTotal={quesIndexTotal}/>
+      </section>
+    )
+  }
+}
+
+class ResultsScreen extends React.Component {
+  render() {
+    const {
+      getResultsTable,
+      nextQuestion,
+      prevQuestion,
+      quizData, 
+      quesIndexCurrent, 
+      quesIndexTotal,
+      resetQuiz,
+      score,
+      updateUserAnswers, 
+      userAnswers} = this.props;
+    const wrongAnswers = quesIndexTotal - score;
+    const getScorePercentage = () => {
+      return Math.round(score/quesIndexTotal * 100);
+    };
+    const getFeedback = (percentage) => {
+      let feedbackMessage;
+      switch (true) {
+        case (percentage >= 85 && percentage <= 100):
+          feedbackMessage = 'Окружающие испытывают на себе такое давление с вашей стороны, что склонны оценивать его как деспотизм. Ваше стремление командовать и безапелляционным тоном поучать других, которое вы, возможно, не замечаете, крайне их угнетает и отталкивает, заставляет защищаться и избегать контакта с вами. ';
+          break;  
+        case (percentage >= 50 && percentage <= 84):
+          feedbackMessage = 'Окружающие дают вам знать, что замечают вашу нетерпимость к критике и считают, что вы переоцениваете свои способности, проявляя черты властности по отношению к ним.';
+          break;
+        case (percentage >= 0 && percentage <= 49):
+          feedbackMessage = 'Вас воспринимают как уверенного в себе человека, который умеет быть хорошим советчиком, наставником и организатором, способным обеспечить эффективное руководство группой.';
+          break; 
+      }
+      return feedbackMessage;
+    };
+    const percentage = getScorePercentage();
+    return (
+      <section className="section-main">
+        <div className="guidelines endscreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
+          <h1>Вы набрали {percentage}%</h1>
+          <h4>{getFeedback(percentage)}</h4><br/><br/><br/>
+          
+          <button className="btn btn-nav" onClick={resetQuiz}>
+            <i className="fas fa-redo"></i> Пройти тест заново
+          </button>
+        </div>
+      </section>
+    )
+  }
+}
+
+
+
+class Timer extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {currentCount: 0}
+  }
+  timer() {    
+    this.setState({currentCount: this.state.currentCount + 1 });
+  }
+  componentDidMount() {
+    this.intervalId = setInterval(this.timer.bind(this), 1000);
+  }
+  componentWillUnmount(){
+    this.props.setTimeTaken(this.state.currentCount);
+    clearInterval(this.intervalId);
+  }
+  render() {
+    const timerFormat = (seconds) => {
+      const date = new Date(null);
+      date.setSeconds(seconds + 1);
+      return date.toISOString().substr(11, 8);
+    }   
+    return (
+      <div className="guidelines timer">
+        <small>{timerFormat(this.state.currentCount)}</small>
+      </div>
+    )
+  }
+}
+
+class Question extends React.Component {
+  render() {
+    const {question, quesIndexCurrent} = this.props;
+    return (
+      <div className="guidelines question">
+        <h2 id="fire">
+          {quesIndexCurrent + 1}.&nbsp;
+          {question[1][quesIndexCurrent].question}
+        </h2>
+      </div>
+    )
+  }
+}
+
+class ProgressBar extends React.Component {
+  render() {
+    const {quesIndexCurrent, quesIndexTotal} = this.props;
+    const fraction = quesIndexCurrent + 1/quesIndexTotal;
+    const fractionStr = `${quesIndexCurrent + 1}/${quesIndexTotal}`;
+    const getPercentage = () => {
+      return Math.round((quesIndexCurrent + 1)/quesIndexTotal * 100);
+    }
+    return (
+      <div className="guidelines progressbar">
+        <div className="progress">
+          <div aria-valuemin={0} 
+               aria-valuemax={100} 
+               aria-valuenow={getPercentage()}
+               className="progress-bar" 
+               role="progressbar"         
+               style={{width: getPercentage() + '%'}}/>  
+        </div>
+        <small>{fractionStr} ({getPercentage()}%)</small>
+      </div>
+    )
+  }
+}
+
+class Answers extends React.Component {
+  render() {
+    const {
+      answers, 
+      quesIndexCurrent, 
+      userAnswers, 
+      updateUserAnswers } = this.props;
+    const btnClass = 'btn btn-lg btn-ans btn-nav form-control';
+    const answerStyle = (index, answerChoice) => {
+      const border = '1px solid ';
+      const borderHighlight = '#FFF';
+      const borderRegular = '#FFFFFF2E';
+      const maxCharacters = 24;
+      if (userAnswers[quesIndexCurrent] == index) {
+        return answerChoice.length > maxCharacters ? 
+          {border: `${border}${borderHighlight}`, fontSize: maxCharacters/2} : 
+          {border: `${border}${borderHighlight}`};
+      } else {
+        return answerChoice.length > maxCharacters ? 
+          {border: `${border}${borderRegular}`, fontSize: maxCharacters/2} : 
+          {border: `${border}${borderRegular}`}
+      }
+    };
+    const handleHover = () => {};
+    const preventFocus = (e) => e.preventDefault();
+    const answerSet = Array.from(answers[1][quesIndexCurrent].answers).map(
+      (answerChoice, index) => 
+      <button className={btnClass}
+              id={index}
+              onClick={updateUserAnswers}
+              onMouseOver={handleHover}
+              onMouseDown={preventFocus}
+              style={answerStyle(index, answerChoice)}>
+        {answerChoice}
+      </button>);
+    return (
+      <div className="guidelines answers col-md-6 offset-md-3">
+        {answerSet}
+      </div>
+    )
+  }
+}
+
+class NavButtons extends React.Component {
+  render() {
+    const btnClass = 'btn btn-nav col-md-6 col-sm-6 col-xs-6';
+    const {
+      nextQuestion, 
+      prevQuestion, 
+      quesIndexCurrent, 
+      quesIndexTotal} = this.props;
+   
+    return ( 
+      <div className="guidelines ui col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-12 col-xs-12">
+        
+      </div>
+    )
+  }
+}
+
+
+
+class Audio extends React.Component {
+  render() {
+    return (
+      <div>
+        <audio src="data:audio/mp3;base64,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" id="click"></audio>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App/>, document.getElementById('app'))
+
+
+        
+        </script>
+
+
+
+
+
+</body>
+</html>
