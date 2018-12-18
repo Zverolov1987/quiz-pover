@@ -123,13 +123,13 @@ body {
   display: none;
 }
 
-h1 {
+h1 {  margin-top:10% !important;
   animation: zoom-in 0.5s linear;
   word-spacing: 1em;
-  font-size:2em !important;
+  font-size:1.5em !important;
 }
 
-hr {
+hr { 
   border: 1px solid #FFFFFF3E;
   width: 100%;
 }
@@ -183,27 +183,9 @@ p, td {
   font-weight: 300;
 }
 
-.progress {
-  left: 0;
-  margin-left: auto;
-  margin-right: auto;
-  right: 0;
-  text-align: center;
-  background-color: #FFFFFF2E;
-  border: 0 solid #495AFF;
-  height: 2px;
-  margin-top: 5px;
-  width: 300px;
-}
 
-.progress-bar {
-  background-color: #FFFFFF5E;
-}
 
-.progressbar {
-  height: 10%;
-  text-align: center;
-}
+
 
 .question {
   display: flex;
@@ -276,14 +258,8 @@ p, td {
   display: block;
 }
 
-small {
-  color: #FFFFFF9E !important;
-}
 
-.timer {
-  height: 5%;
-  text-align: right;
-}
+
 
 .titlescreen {
   display: flex;
@@ -382,7 +358,7 @@ text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34
 
 
 #fire-text{
-
+  
   color: rgba(255, 255, 255, 0);
   text-shadow: 0 0 1px #ffffff, 0 -3px 5px #fffc00, 0 -8px 15px #ff983d, 0 -15px 30px #ff983d;
 
@@ -395,11 +371,12 @@ text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34
 
 
 img {
-  display: inline-block;
+ 
   height: auto;
-  max-width: 40%;
-  margin:1%;
+  max-width: 85%;
+  
   margin-top:5%;
+ 
 
 text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
 

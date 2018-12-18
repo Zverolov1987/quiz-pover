@@ -166,13 +166,13 @@
       title,
       userAnswers} = this.state;
     const displayFooter = () => {
-      if (!inPlay) {
+      
         return (
 
           <div className="guidelines footer neon" >
 WHITE ROOM</div>
         )
-      }
+      
     };
     return (
       <div className="guidelines container">
@@ -281,9 +281,9 @@ class TitleScreen extends React.Component {
             Пройти тест <i className="fas fa-arrow-right"></i>
           </button>
 
-    <div classname="text-center">
-      <img src="img/wr1.jpg" classname="img-fluid img-thumbnail float-left" alt="psicholog-1" />
-      <img src="img/wr2.jpg" classname="img-fluid img-thumbnail float-right" alt="psicholog-2" />
+    
+     <div className="text-center"> 
+ <img src="img/wr.jpg" classname="img-fluid img-thumbnail" alt="psicholog" />
 </div>
    
 
@@ -335,10 +335,10 @@ class QuestionScreen extends React.Component {
     return (
       <section className="section-main">
         <Debug userAnswers={userAnswers}/>
-        <Timer setTimeTaken={setTimeTaken}/>
+        
         <Question quesIndexCurrent={quesIndexCurrent} 
                   question={quizData}/>
-        <ProgressBar quesIndexCurrent={quesIndexCurrent}                                      quesIndexTotal={quesIndexTotal}/>
+        
         <Answers answers={quizData} 
                  updateUserAnswers={updateUserAnswers}
                  userAnswers={userAnswers}
@@ -386,7 +386,7 @@ class ResultsScreen extends React.Component {
     };
     const percentage = getScorePercentage();
     return (
-<div className="guidelines container">
+
 
       <section className="section-main">
         <div className="guidelines endscreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
@@ -406,46 +406,16 @@ class ResultsScreen extends React.Component {
         </div>
       </section>
 
-<section className="section-footer">
+
 	
-     <div className="guidelines footer neon">WHITE ROOM</div>
-        </section>
-	
-</div>
+
     )
   }
 }
 
 
 
-class Timer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {currentCount: 0}
-  }
-  timer() {    
-    this.setState({currentCount: this.state.currentCount + 1 });
-  }
-  componentDidMount() {
-    this.intervalId = setInterval(this.timer.bind(this), 1000);
-  }
-  componentWillUnmount(){
-    this.props.setTimeTaken(this.state.currentCount);
-    clearInterval(this.intervalId);
-  }
-  render() {
-    const timerFormat = (seconds) => {
-      const date = new Date(null);
-      date.setSeconds(seconds + 1);
-      return date.toISOString().substr(11, 8);
-    }   
-    return (
-      <div className="guidelines timer">
-        <small>{timerFormat(this.state.currentCount)}</small>
-      </div>
-    )
-  }
-}
+
 
 class Question extends React.Component {
   render() {
@@ -461,29 +431,7 @@ class Question extends React.Component {
   }
 }
 
-class ProgressBar extends React.Component {
-  render() {
-    const {quesIndexCurrent, quesIndexTotal} = this.props;
-    const fraction = quesIndexCurrent + 1/quesIndexTotal;
-    const fractionStr = `${quesIndexCurrent + 1}/${quesIndexTotal}`;
-    const getPercentage = () => {
-      return Math.round((quesIndexCurrent + 1)/quesIndexTotal * 100);
-    }
-    return (
-      <div className="guidelines progressbar">
-        <div className="progress">
-          <div aria-valuemin={0} 
-               aria-valuemax={100} 
-               aria-valuenow={getPercentage()}
-               className="progress-bar" 
-               role="progressbar"         
-               style={{width: getPercentage() + '%'}}/>  
-        </div>
-        <small>{fractionStr} ({getPercentage()}%)</small>
-      </div>
-    )
-  }
-}
+
 
 class Answers extends React.Component {
   render() {
@@ -528,6 +476,7 @@ class Answers extends React.Component {
   }
 }
 
+
 class NavButtons extends React.Component {
   render() {
     const btnClass = 'btn btn-nav col-md-6 col-sm-6 col-xs-6';
@@ -544,7 +493,6 @@ class NavButtons extends React.Component {
     )
   }
 }
-
 
 
 class Audio extends React.Component {
