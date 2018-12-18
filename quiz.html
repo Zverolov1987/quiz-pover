@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>QUIZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />
+    
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
-
+<link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />
     
 
     <script src="https://fb.me/react-15.1.0.js"></script>
@@ -31,10 +31,11 @@
         class App extends React.Component {
   constructor() {
     super();
-   // this.quizDataSrc = 'https://api.myjson.com/bins/x61f2';
+
+ this.quizDataSrc = 'https://api.jsonbin.io/b/5c188f3333a8fe76ff4e3f34/2';
     
 
-    this.quizDataSrc = 'https://api.myjson.com/bins/18zjcw';
+   // this.quizDataSrc = 'https://api.myjson.com/bins/18zjcw';
 
     				
     this.state = {
@@ -167,7 +168,9 @@
     const displayFooter = () => {
       if (!inPlay) {
         return (
-          <div className="guidelines footer" id="neon">WHITE ROOM</div>
+
+          <div className="guidelines footer neon" >
+WHITE ROOM</div>
         )
       }
     };
@@ -194,6 +197,7 @@
               updateUserAnswers={this.updateUserAnswers}
               userAnswers={userAnswers} />
         <section className="section-footer">
+	
           {displayFooter()}
         </section>
       </div>
@@ -276,6 +280,13 @@ class TitleScreen extends React.Component {
           <button className="btn btn-nav "  onClick={beginPlay}>
             Пройти тест <i className="fas fa-arrow-right"></i>
           </button>
+
+    <div classname="text-center">
+      <img src="img/wr1.jpg" classname="img-fluid img-thumbnail float-left" alt="psicholog-1" />
+      <img src="img/wr2.jpg" classname="img-fluid img-thumbnail float-right" alt="psicholog-2" />
+</div>
+   
+
         </div>)
       } else {
         return (
@@ -375,6 +386,8 @@ class ResultsScreen extends React.Component {
     };
     const percentage = getScorePercentage();
     return (
+<div className="guidelines container">
+
       <section className="section-main">
         <div className="guidelines endscreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
           <h1>Вы набрали {percentage}%</h1>
@@ -382,9 +395,23 @@ class ResultsScreen extends React.Component {
           
           <button className="btn btn-nav" onClick={resetQuiz}>
             <i className="fas fa-redo"></i> Пройти тест заново
-          </button>
+          </button>	
+	
+	
+<a className="btn btn-nav" href="http://www.psychologsaratov.ru/kontakty" target="_blank" id="link">
+             Записаться на прием <i className="fas fa-arrow-right"></i>
+        </a>
+	
+
         </div>
       </section>
+
+<section className="section-footer">
+	
+     <div className="guidelines footer neon">WHITE ROOM</div>
+        </section>
+	
+</div>
     )
   }
 }

@@ -26,6 +26,7 @@ body {
 }
 
 .btn-ans {
+  margin:1%;
   border: 1px solid #FFFFFF2E;
   font-size: 18px;
   height: 55px;
@@ -363,7 +364,7 @@ small {
 
 
 
-#neon{
+.neon{
 
 text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
 
@@ -389,9 +390,19 @@ text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34
 
 
 
+#link{margin-top:1%;}
 
 
 
+img {
+  display: inline-block;
+  height: auto;
+  max-width: 40%;
+  margin:1%;
+  margin-top:5%;
 
+text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+
+}
 
 
