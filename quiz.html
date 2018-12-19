@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>QUIZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
+<link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />    
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />
+
     
 
     <script src="https://fb.me/react-15.1.0.js"></script>
@@ -169,8 +170,8 @@
       
         return (
 
-          <div className="guidelines footer neon" >
-WHITE ROOM</div>
+ <div className="guidelines footer neon" > +7 (8452) 93-97-30 </div>
+
         )
       
     };
@@ -277,7 +278,7 @@ class TitleScreen extends React.Component {
         return (<div className="guidelines titlescreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
           <h1 id="fire-text">{title}</h1>
           <p>{subtitle}</p><br/>
-          <button className="btn btn-nav "  onClick={beginPlay}>
+          <button className="btn btn-nav" onClick={beginPlay}>
             Пройти тест <i className="fas fa-arrow-right"></i>
           </button>
 
@@ -393,7 +394,7 @@ class ResultsScreen extends React.Component {
           <h1>Вы набрали {percentage}%</h1>
           <h4>{getFeedback(percentage)}</h4><br/><br/><br/>
           
-          <button className="btn btn-nav" onClick={resetQuiz}>
+          <button className="btn btn-nav" id="end" onClick={resetQuiz}>
             <i className="fas fa-redo"></i> Пройти тест заново
           </button>	
 	
