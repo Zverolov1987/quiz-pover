@@ -398,12 +398,40 @@ text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 
 
 
 
+@media screen and (max-height: 700px){
+
+
+#feedback{
+font-size:1.2rem;
+}
+
+#wr{
+height: auto;
+max-width: 65%;
+}
+
+
+
+}
 
 
 
 
+@media screen and (max-width: 500px){
 
 
+#feedback{
+font-size:1rem;
+}
+
+#wr{
+height: auto;
+max-width: 65%;
+}
+
+
+
+}
 
 
 

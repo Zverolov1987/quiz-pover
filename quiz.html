@@ -288,7 +288,7 @@ class TitleScreen extends React.Component {
 
     
      <div className="text-center"> 
- <img src="img/wr.jpg" classname="img-fluid img-thumbnail" alt="psicholog" />
+ <img src="img/wr.jpg" id="wr" classname="img-fluid img-thumbnail" alt="psicholog" />
 </div>
    
 
@@ -396,7 +396,7 @@ class ResultsScreen extends React.Component {
       <section className="section-main">
         <div className="guidelines endscreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
         
-          <h4>{getFeedback(percentage)}</h4><br/>
+          <h4 id="feedback">{getFeedback(percentage)}</h4><br/>
           
           <button className="btn btn-nav" id="end" onClick={resetQuiz}>
             <i className="fas fa-redo"></i> Пройти тест заново
