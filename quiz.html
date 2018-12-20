@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>QUIZ</title>
+    <title>Тест- Лидерство</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" href="img/icon.jpg" type="image/gif" sizes="16x16">
 <link rel="stylesheet" type="text/css" media="screen" href="CSS/quiz.css" />    
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
@@ -20,6 +20,10 @@
     
 </head>
 <body>
+
+<!-- This test it's simple fork from https://codepen.io/johnmardev/pen/zmdmxd     -->
+
+
 
 <div id="app"></div>
 
@@ -374,13 +378,13 @@ class ResultsScreen extends React.Component {
       let feedbackMessage;
       switch (true) {
         case (percentage >= 85 && percentage <= 100):
-          feedbackMessage = 'Вы проявляете на окружающих сильное давление, похожее на деспотизм. Ваше стремление командовать безапелляционным тоном, может угнетать окружающих, некоторых заставляет защищаться или избегать контакта с вами.';
+          feedbackMessage = 'Итог: Вы проявляете на окружающих сильное давление, похожее на деспотизм. Ваше стремление командовать безапелляционным тоном, может угнетать окружающих, некоторых заставляет защищаться или избегать контакта с вами.';
           break;  
         case (percentage >= 50 && percentage <= 84):
-          feedbackMessage = 'Вы нетерпимы к критике и можете проявлять черты властности по отношению к окружающим.';
+          feedbackMessage = 'Итог: Вы нетерпимы к критике и можете проявлять черты властности по отношению к окружающим.';
           break;
         case (percentage >= 0 && percentage <= 49):
-          feedbackMessage = 'Вы уверенный в себе человек, который умеет быть хорошим советчиком, наставником и организатором, способным обеспечить эффективное руководство группой.';
+          feedbackMessage = 'Итог: Вы уверенный в себе человек, который умеет быть хорошим советчиком, наставником и организатором, способным обеспечить эффективное руководство группой.';
           break; 
       }
       return feedbackMessage;
@@ -391,8 +395,8 @@ class ResultsScreen extends React.Component {
 
       <section className="section-main">
         <div className="guidelines endscreen col col-lg-6 offset-lg-3 col-md-6 offset-md-3"><br/><br/>
-          <h1>Вы набрали {percentage}%</h1>
-          <h4>{getFeedback(percentage)}</h4><br/><br/><br/>
+        
+          <h4>{getFeedback(percentage)}</h4><br/>
           
           <button className="btn btn-nav" id="end" onClick={resetQuiz}>
             <i className="fas fa-redo"></i> Пройти тест заново
@@ -404,6 +408,9 @@ class ResultsScreen extends React.Component {
         </a>
 	
 
+<div className="text-center"> 
+ <img src="img/wrl.jpg" classname="img-fluid img-thumbnail" alt="white_room" />
+</div>
         </div>
       </section>
 

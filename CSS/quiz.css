@@ -16,7 +16,7 @@ body {
 
 .btn {
   border: 0 none;
-  font-weight: 300;
+  font-weight: 999 !important ;
   letter-spacing: 1px;
   text-transform: uppercase;
   padding: .375rem .75rem !important;
@@ -34,6 +34,7 @@ body {
   height: 55px;
   margin-bottom: 1px;
   text-transform: capitalize;
+  color: #000 !important;
 }
 
 .btn-ans:active, .btn-ans:hover {
@@ -345,7 +346,7 @@ p, td {
 
 
 .neon{
-
+opacity: 0.5;
 text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
 
 }
